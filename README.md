@@ -3,7 +3,6 @@
 代码生成器，目的是为了解放码农们那些重复的，不需要任何思考的Coding。
 
 ##### 项目名称来由
-![https://redmine.duoquyuedu.com/attachments/download/95/kraay.jpeg](Icon)
 
 > 项目的Icon和别名的灵感来自于加拿大的一位真实的码农。
 
