@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <description>Spring公共配置</description>
+
+    <!-- 以静态变量保存ApplicationContext -->
+    <!--<bean class="com.duoqu.commons.web.spring.SpringContextHolder" lazy-init="false" />-->
+
+    <!-- 定义受环境影响易变的变量 -->
+    <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+        <!--<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />-->
+        <!--<property name="ignoreResourceNotFound" value="true" />-->
+        <!--<property name="locations">-->
+            <!--<list>-->
+                <!--<value>/WEB-INF/config/jdbc.properties</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.duoqu.commons" />
+    <context:component-scan base-package="com.duoqu.rs.common" />
+
+    <!--<import resource="dao.xml"/>-->
+
+    <!--<bean id="messageSource"-->
+          <!--class="org.springframework.context.support.ResourceBundleMessageSource">-->
+        <!--<property name="basenames">-->
+            <!--<list>-->
+                <!--<value>template/errors</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+</beans>
