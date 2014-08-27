@@ -31,7 +31,7 @@ public class BuilderServiceTest extends BaseTest {
     @Test
     public void builderDaoTest(){
         mi.setDatabase("rs");
-        mi.setTables(Lists.newArrayList("t_admin_user"));
+//        mi.setTables(Lists.newArrayList("t_admin_user"));
 
 
         Map<String,List<ColumnInfo>> columns = databaseService.descTable(mi);

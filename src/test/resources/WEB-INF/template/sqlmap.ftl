@@ -100,11 +100,11 @@
         </select>
 
         <delete id="delete" parameterType="list">
-                <![CDATA[
-        			delete from ${tableName} where id in
-        		]]>
-                <foreach collection="list" item="id"  open="(" separator="," close=")">
-                    ${well}{id}
-                </foreach>
-            </delete>
+            <![CDATA[
+                delete from ${tableName} where id in
+            ]]>
+            <foreach collection="list" item="id"  open="(" separator="," close=")">
+                ${well}{id}
+            </foreach>
+        </delete>
 </mapper>

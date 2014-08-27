@@ -2,6 +2,8 @@ package com.duoqu.commons.kraay.service;
 
 import com.duoqu.commons.kraay.bean.ColumnInfo;
 import com.duoqu.commons.kraay.bean.Field;
+import com.duoqu.commons.utils.CompressUtil;
+import com.duoqu.commons.utils.FileUtil;
 import com.google.common.collect.Lists;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -60,20 +62,24 @@ public class BuilderService {
 
     private void writeFile(Map model) {
         try {
-//            Template daoTemplate = freemarkerConfiguration.getTemplate("dao.ftl", encoding);
-//            String daoText = FreeMarkerTemplateUtils.processTemplateIntoString(daoTemplate, model);
-//
-//            log.info(daoText);
-//
-//            Template entityTemplate = freemarkerConfiguration.getTemplate("entity.ftl", encoding);
-//            String enttityText = FreeMarkerTemplateUtils.processTemplateIntoString(entityTemplate, model);
-//
-//            log.info(enttityText);
+            Template daoTemplate = freemarkerConfiguration.getTemplate("dao.ftl", encoding);
+            String daoText = FreeMarkerTemplateUtils.processTemplateIntoString(daoTemplate, model);
+            log.info(daoText);
+
+            FileUtil.saveFile(daoText.getBytes(),"/nh/tmp/kraay/"+model.get("className")+"/dao/"+model.get("className")+"Dao.java");
+
+            Template entityTemplate = freemarkerConfiguration.getTemplate("entity.ftl", encoding);
+            String enttityText = FreeMarkerTemplateUtils.processTemplateIntoString(entityTemplate, model);
+
+            log.info(enttityText);
+            FileUtil.saveFile(daoText.getBytes(),"/nh/tmp/kraay/"+model.get("className")+"/entity/"+model.get("className")+".java");
 
             Template sqlmapTemplate = freemarkerConfiguration.getTemplate("sqlmap.ftl", encoding);
             String sqlmapText = FreeMarkerTemplateUtils.processTemplateIntoString(sqlmapTemplate, model);
-
+            FileUtil.saveFile(daoText.getBytes(),"/nh/tmp/kraay/"+model.get("className")+"/sqlmap/"+model.get("className")+".xml");
             log.info(sqlmapText);
+
+            CompressUtil.zipFile("/nh/tmp/kraay","/nh/tmp/kraay.zip");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
