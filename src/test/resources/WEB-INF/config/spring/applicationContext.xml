@@ -29,14 +29,8 @@
     <context:component-scan base-package="com.duoqu.commons" />
     <context:component-scan base-package="com.duoqu.rs.common" />
 
-    <!--<import resource="dao.xml"/>-->
-
-    <!--<bean id="messageSource"-->
-          <!--class="org.springframework.context.support.ResourceBundleMessageSource">-->
-        <!--<property name="basenames">-->
-            <!--<list>-->
-                <!--<value>template/errors</value>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <bean id="freemarkerConfiguration"
+          class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+        <property name="templateLoaderPath" value="/WEB-INF/template/" />
+    </bean>
 </beans>
