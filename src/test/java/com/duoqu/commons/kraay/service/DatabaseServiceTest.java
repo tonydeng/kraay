@@ -44,10 +44,10 @@ public class DatabaseServiceTest extends BaseTest {
         }
     }
 
-//    @Test
+    @Test
     public void descTableTest() throws SQLException, ClassNotFoundException {
         mi.setDatabase("ebp");
-        mi.setTables(Lists.newArrayList("t_ebp_style"));
+        mi.setTables(Lists.newArrayList("t_ebp_book"));
         Map<String,List<ColumnInfo>> columns = databaseService.descTable(mi);
         for(String table:columns.keySet()){
             for(ColumnInfo column: columns.get(table)){

@@ -11,7 +11,6 @@ import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.IOException;
@@ -22,16 +21,19 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by tonydeng on 14-8-27.
  */
-@Service("builderService")
 public class BuilderService {
     private static final Logger log = LoggerFactory.getLogger(BuilderService.class);
     private static final String encoding = "UTF-8";
     private static final String table_prefix = "t_";
     private static final String well = "#";
+    private static String savePath;
     @Autowired
     private Configuration freemarkerConfiguration;
 
     public void builder(String packaging, Map<String, List<ColumnInfo>> columns) {
+
+        FileUtil.delFolder(savePath);
+
         for (String table : columns.keySet()) {
             Map model = new ConcurrentHashMap();
 
@@ -58,28 +60,32 @@ public class BuilderService {
             model.put("well",well);
             writeFile(model);
         }
+
+        CompressUtil.zipFile(savePath,savePath.substring(0,savePath.length() -1)+".zip");
     }
 
     private void writeFile(Map model) {
         try {
+            String path = savePath+model.get("className")+"/";
+
+            log.info("path:'"+path+"'");
+
             Template daoTemplate = freemarkerConfiguration.getTemplate("dao.ftl", encoding);
             String daoText = FreeMarkerTemplateUtils.processTemplateIntoString(daoTemplate, model);
-            log.info(daoText);
+//            log.info(daoText);
 
-            FileUtil.saveFile(daoText.getBytes(),"/nh/tmp/kraay/"+model.get("className")+"/dao/"+model.get("className")+"Dao.java");
+            FileUtil.saveFile(daoText.getBytes(),path+model.get("className")+"Dao.java");
 
             Template entityTemplate = freemarkerConfiguration.getTemplate("entity.ftl", encoding);
             String enttityText = FreeMarkerTemplateUtils.processTemplateIntoString(entityTemplate, model);
 
-            log.info(enttityText);
-            FileUtil.saveFile(daoText.getBytes(),"/nh/tmp/kraay/"+model.get("className")+"/entity/"+model.get("className")+".java");
+//            log.info(enttityText);
+            FileUtil.saveFile(enttityText.getBytes(),path+model.get("className")+".java");
 
             Template sqlmapTemplate = freemarkerConfiguration.getTemplate("sqlmap.ftl", encoding);
             String sqlmapText = FreeMarkerTemplateUtils.processTemplateIntoString(sqlmapTemplate, model);
-            FileUtil.saveFile(daoText.getBytes(),"/nh/tmp/kraay/"+model.get("className")+"/sqlmap/"+model.get("className")+".xml");
-            log.info(sqlmapText);
-
-            CompressUtil.zipFile("/nh/tmp/kraay","/nh/tmp/kraay.zip");
+            FileUtil.saveFile(sqlmapText.getBytes(),path+model.get("className")+"Mapper.xml");
+//            log.info(sqlmapText);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
@@ -108,6 +114,9 @@ public class BuilderService {
                 break;
             case "BIGINT":
                 fieldType = "Long";
+                break;
+            case "DECIMAL":
+                fieldType = "Double";
                 break;
         }
         return fieldType;
@@ -147,5 +156,13 @@ public class BuilderService {
             sb.append(s.substring(0, 1).toUpperCase() + s.substring(1));
         }
         return sb.toString();
+    }
+
+    public static String getSavePath() {
+        return savePath;
+    }
+
+    public static void setSavePath(String savePath) {
+        BuilderService.savePath = savePath;
     }
 }
