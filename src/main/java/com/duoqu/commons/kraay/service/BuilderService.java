@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class BuilderService {
     @Autowired
     private Configuration freemarkerConfiguration;
 
-    public void builder(String packaging, Map<String, List<ColumnInfo>> columns) {
+    public void builder(String packaging,String database, Map<String, List<ColumnInfo>> columns) {
 
         FileUtil.delFolder(savePath);
 
@@ -61,7 +62,7 @@ public class BuilderService {
             writeFile(model);
         }
 
-        CompressUtil.zipFile(savePath,savePath.substring(0,savePath.length() -1)+".zip");
+        CompressUtil.zipFile(savePath,new File(savePath).getParent()+File.separator+database+".zip");
     }
 
     private void writeFile(Map model) {

@@ -39,7 +39,7 @@ public class BuilderServiceTest extends BaseTest {
 
         Map<String,List<ColumnInfo>> columns = databaseService.descTable(mi);
         String packaging = "com.duoqu.rs.dao";
-        builderService.builder(packaging,columns);
+        builderService.builder(packaging,mi.getDatabase(),columns);
     }
 //    @Test
     public void getClassNameTest(){
