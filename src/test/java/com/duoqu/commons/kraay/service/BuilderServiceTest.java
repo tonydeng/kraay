@@ -33,9 +33,12 @@ public class BuilderServiceTest extends BaseTest {
 
 
         List<ColumnInfo> columns = databaseService.descTable(mi);
-        String packaging = "com.duoqu.rs.dao.entity";
+        String packaging = "com.duoqu.rs.dao";
         String tableName = "Upgrade";
-        String text = builderService.builderDao(packaging,tableName,columns,"entity.ftl");
+        String text = builderService.builderDao(packaging,tableName,columns,"dao.ftl");
+        log.info(text);
+
+        text = builderService.builderEntity(packaging,tableName,columns,"entity.ftl");
         log.info(text);
     }
 }

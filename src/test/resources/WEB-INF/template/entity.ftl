@@ -1,5 +1,5 @@
 <#ftl encoding='UTF-8'>
-package ${packaging};
+package ${packaging}.entity;
 
 import java.util.Date;
 

@@ -26,6 +26,36 @@ public class BuilderService {
     @Autowired
     private Configuration freemarkerConfiguration;
 
+    public String builderEntity(String packaging, String tableName, List<ColumnInfo> columns, String templateName) {
+        String text = null;
+        try {
+            Map model = new ConcurrentHashMap();
+
+            List<Field> fields = Lists.newArrayList();
+            for (ColumnInfo ci : columns) {
+                Field field = new Field();
+
+                field.setType(getFieldType(ci.getType()));
+                field.setLower(getLower(ci.getName()));
+                field.setUpper(getUpper(ci.getName()));
+                fields.add(field);
+            }
+
+            model.put("packaging", packaging);
+            model.put("tableName",tableName);
+            model.put("columns", columns);
+
+            model.put("fields", fields);
+
+            Template template = freemarkerConfiguration.getTemplate(templateName);
+            text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TemplateException e) {
+            e.printStackTrace();
+        }
+        return text;
+    }
     public String builderDao(String packaging, String tableName, List<ColumnInfo> columns, String templateName) {
         String text = null;
         try {
@@ -43,6 +73,7 @@ public class BuilderService {
 
             model.put("packaging", packaging);
             model.put("tableName",tableName);
+            model.put("lowerTable",tableName.substring(0,1).toLowerCase()+tableName.substring(1));
             model.put("columns", columns);
 
             model.put("fields", fields);
