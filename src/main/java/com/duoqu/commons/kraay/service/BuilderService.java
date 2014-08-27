@@ -23,69 +23,63 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service("builderService")
 public class BuilderService {
     private static final Logger log = LoggerFactory.getLogger(BuilderService.class);
+    private static final String encoding = "UTF-8";
+    private static final String table_prefix = "t_";
+    private static final String well = "#";
     @Autowired
     private Configuration freemarkerConfiguration;
 
-    public String builderEntity(String packaging, String tableName, List<ColumnInfo> columns, String templateName) {
-        String text = null;
-        try {
+    public void builder(String packaging, Map<String, List<ColumnInfo>> columns) {
+        for (String table : columns.keySet()) {
             Map model = new ConcurrentHashMap();
 
             List<Field> fields = Lists.newArrayList();
-            for (ColumnInfo ci : columns) {
+            for (ColumnInfo ci : columns.get(table)) {
                 Field field = new Field();
 
                 field.setType(getFieldType(ci.getType()));
                 field.setLower(getLower(ci.getName()));
                 field.setUpper(getUpper(ci.getName()));
+                field.setOriginal(ci.getName());
                 fields.add(field);
             }
 
+            String className = getClassName(table);
+
             model.put("packaging", packaging);
-            model.put("tableName",tableName);
+            model.put("className", className);
+            model.put("tableName", table);
+            model.put("lowerTable", className.substring(0, 1).toLowerCase() + className.substring(1));
             model.put("columns", columns);
 
             model.put("fields", fields);
-
-            Template template = freemarkerConfiguration.getTemplate(templateName);
-            text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TemplateException e) {
-            e.printStackTrace();
+            model.put("well",well);
+            writeFile(model);
         }
-        return text;
     }
-    public String builderDao(String packaging, String tableName, List<ColumnInfo> columns, String templateName) {
-        String text = null;
+
+    private void writeFile(Map model) {
         try {
-            Map model = new ConcurrentHashMap();
+//            Template daoTemplate = freemarkerConfiguration.getTemplate("dao.ftl", encoding);
+//            String daoText = FreeMarkerTemplateUtils.processTemplateIntoString(daoTemplate, model);
+//
+//            log.info(daoText);
+//
+//            Template entityTemplate = freemarkerConfiguration.getTemplate("entity.ftl", encoding);
+//            String enttityText = FreeMarkerTemplateUtils.processTemplateIntoString(entityTemplate, model);
+//
+//            log.info(enttityText);
 
-            List<Field> fields = Lists.newArrayList();
-            for (ColumnInfo ci : columns) {
-                Field field = new Field();
+            Template sqlmapTemplate = freemarkerConfiguration.getTemplate("sqlmap.ftl", encoding);
+            String sqlmapText = FreeMarkerTemplateUtils.processTemplateIntoString(sqlmapTemplate, model);
 
-                field.setType(getFieldType(ci.getType()));
-                field.setLower(getLower(ci.getName()));
-                field.setUpper(getUpper(ci.getName()));
-                fields.add(field);
-            }
-
-            model.put("packaging", packaging);
-            model.put("tableName",tableName);
-            model.put("lowerTable",tableName.substring(0,1).toLowerCase()+tableName.substring(1));
-            model.put("columns", columns);
-
-            model.put("fields", fields);
-
-            Template template = freemarkerConfiguration.getTemplate(templateName);
-            text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+            log.info(sqlmapText);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
             e.printStackTrace();
         }
-        return text;
+
     }
 
     private String getFieldType(String type) {
@@ -100,8 +94,14 @@ public class BuilderService {
             case "TIMESTAMP":
                 fieldType = "Date";
                 break;
+            case "DATE":
+                fieldType = "Date";
+                break;
             case "TINYINT":
                 fieldType = "Boolean";
+                break;
+            case "BIGINT":
+                fieldType = "Long";
                 break;
         }
         return fieldType;
@@ -127,5 +127,19 @@ public class BuilderService {
             upper.append(array[i].substring(0, 1).toUpperCase() + array[i].substring(1));
         }
         return upper.toString();
+    }
+
+    private String getClassName(String table) {
+        String className;
+        if (table.indexOf(table_prefix) == 0) {
+            className = table.substring(table_prefix.length(), table.length());
+        } else {
+            className = table;
+        }
+        StringBuffer sb = new StringBuffer();
+        for (String s : className.split("_")) {
+            sb.append(s.substring(0, 1).toUpperCase() + s.substring(1));
+        }
+        return sb.toString();
     }
 }

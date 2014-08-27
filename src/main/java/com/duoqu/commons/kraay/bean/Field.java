@@ -4,9 +4,18 @@ package com.duoqu.commons.kraay.bean;
  * Created by tonydeng on 14-8-27.
  */
 public class Field {
+    private String original;
     private String lower;
     private String upper;
     private String type;
+
+    public String getOriginal() {
+        return original;
+    }
+
+    public void setOriginal(String original) {
+        this.original = original;
+    }
 
     public String getLower() {
         return lower;

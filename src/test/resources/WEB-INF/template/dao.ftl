@@ -1,6 +1,6 @@
 package ${packaging}.repository;
 
-import ${packaging}.entity.${tableName};
+import ${packaging}.entity.${className};
 
 import java.util.List;
 import java.util.Map;
@@ -10,19 +10,19 @@ import java.util.Map;
  * 方法名称必须与Mapper.xml中保持一致.
  */
 @MyBatisRepository
-public interface ${tableName}Dao {
+public interface ${className}Dao {
 
-	${tableName} get(Integer id);
+	${className} get(Integer id);
 
 	int contain(Map<String, Object> parameters);
 
-	List<${tableName}> find(Map<String, Object> parameters);
+	List<${className}> find(Map<String, Object> parameters);
 
 	int count(Map<String, Object> parameters);
 
-	int insert(${tableName} ${lowerTable}) ;
+	int insert(${className} ${lowerTable}) ;
 
-	int update(${tableName} ${lowerTable});
+	int update(${className} ${lowerTable});
 
 	int delete(Integer id);
 

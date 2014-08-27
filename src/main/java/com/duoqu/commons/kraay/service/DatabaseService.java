@@ -4,12 +4,15 @@ import com.duoqu.commons.kraay.bean.ColumnInfo;
 import com.duoqu.commons.kraay.bean.MysqlInfo;
 import com.duoqu.commons.kraay.utils.DBUtil;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by tonydeng on 14-8-26.
@@ -95,20 +98,28 @@ public class DatabaseService {
         return tables;
     }
 
-    public List<ColumnInfo> descTable(MysqlInfo mi) {
+    public Map<String, List<ColumnInfo>> descTable(MysqlInfo mi) {
+        if(CollectionUtils.isEmpty(mi.getTables())){
+            mi.setTables(showTables(mi));
+        }
         Statement stmt = null;
         ResultSet rs = null;
-        List<ColumnInfo> columns = null;
+        Map<String, List<ColumnInfo>> result = null;
         try {
             stmt = DBUtil.getConnection(mi).createStatement();
-            String sql = "select * from " + mi.getTable() +" where 1=2";
-            rs = stmt.executeQuery(sql);
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int j = rsmd.getColumnCount();
-            columns = Lists.newArrayList();
-            for(int i = 1;i<=j;i++){
-                ColumnInfo column = new ColumnInfo(rsmd.getColumnName(i),rsmd.getColumnTypeName(i).split(" ")[0]);
-                columns.add(column);
+            result = new ConcurrentHashMap<>();
+            for (String table : mi.getTables()) {
+                String sql = "select * from " + table + " where 1=2";
+                rs = stmt.executeQuery(sql);
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int j = rsmd.getColumnCount();
+                List<ColumnInfo> columns = Lists.newArrayList();
+                for (int i = 1; i <= j; i++) {
+                    ColumnInfo column = new ColumnInfo(rsmd.getColumnName(i), rsmd.getColumnTypeName(i).split(" ")[0]);
+                    columns.add(column);
+                }
+
+                result.put(table,columns);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,7 +140,7 @@ public class DatabaseService {
             }
             DBUtil.closeConnection();
         }
-        return columns;
+        return result;
     }
 
 }

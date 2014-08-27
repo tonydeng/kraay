@@ -3,6 +3,7 @@ package com.duoqu.commons.kraay.service;
 import com.duoqu.commons.BaseTest;
 import com.duoqu.commons.kraay.bean.ColumnInfo;
 import com.duoqu.commons.kraay.bean.MysqlInfo;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +44,15 @@ public class DatabaseServiceTest extends BaseTest {
         }
     }
 
-    @Test
+//    @Test
     public void descTableTest() throws SQLException, ClassNotFoundException {
         mi.setDatabase("ebp");
-        mi.setTable("t_ebp_style");
-        List<ColumnInfo> columns = databaseService.descTable(mi);
-        for(ColumnInfo column: columns){
-            log.info(column.getName()+"     "+column.getType());
+        mi.setTables(Lists.newArrayList("t_ebp_style"));
+        Map<String,List<ColumnInfo>> columns = databaseService.descTable(mi);
+        for(String table:columns.keySet()){
+            for(ColumnInfo column: columns.get(table)){
+                log.info(column.getName()+"     "+column.getType());
+            }
         }
-
     }
 }

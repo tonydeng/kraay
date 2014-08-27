@@ -3,7 +3,7 @@ package ${packaging}.entity;
 
 import java.util.Date;
 
-public class ${tableName} {
+public class ${className} {
 <#list fields as field>
     private ${field.type} ${field.lower};
 </#list>

@@ -1,5 +1,7 @@
 package com.duoqu.commons.kraay.bean;
 
+import java.util.List;
+
 /**
  * Created by tonydeng on 14-8-26.
  */
@@ -9,7 +11,7 @@ public class MysqlInfo {
     private String host;
     private int port;
     private String database;
-    private String table;
+    private List<String> tables;
 
     public String getUser() {
         return user;
@@ -51,11 +53,11 @@ public class MysqlInfo {
         this.port = port;
     }
 
-    public String getTable() {
-        return table;
+    public List<String> getTables() {
+        return tables;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setTables(List<String> tables) {
+        this.tables = tables;
     }
 }
