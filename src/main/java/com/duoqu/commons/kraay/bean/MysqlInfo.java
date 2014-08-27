@@ -8,6 +8,8 @@ public class MysqlInfo {
     private String password;
     private String host;
     private int port;
+    private String database;
+    private String table;
 
     public String getUser() {
         return user;
@@ -37,7 +39,23 @@ public class MysqlInfo {
         return port;
     }
 
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
     }
 }

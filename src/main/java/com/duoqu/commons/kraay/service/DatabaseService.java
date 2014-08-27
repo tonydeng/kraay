@@ -1,13 +1,17 @@
 package com.duoqu.commons.kraay.service;
 
+import com.duoqu.commons.kraay.bean.ColumnInfo;
 import com.duoqu.commons.kraay.bean.MysqlInfo;
-import org.apache.commons.lang3.StringUtils;
+import com.duoqu.commons.kraay.utils.DBUtil;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tonydeng on 14-8-26.
@@ -15,32 +19,119 @@ import java.util.List;
 @Service("databaseService")
 public class DatabaseService {
     private static final Logger log = LoggerFactory.getLogger(DatabaseService.class);
-    private static final String driver = "com.mysql.jdbc.Driver";
 
-    public List<String> showDatabases(MysqlInfo mi) throws ClassNotFoundException, SQLException {
-        Class.forName(driver);
-        Connection conn = DriverManager.getConnection(getMysqlConnUrl(mi.getHost(), mi.getPort(), null), mi.getUser(), mi.getPassword());
-        Statement stmt = conn.createStatement();
-        String sql = "show databases;";
-        ResultSet rs = stmt.executeQuery(sql);
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int j = 0;
-        j = rsmd.getColumnCount();
-        for (int k = 0; k < j; k++) {
-            log.info(rsmd.getCatalogName(k + 1));
-        }
-        while (rs.next()) {
-            for (int i = 0; i < j; i++) {
-                log.info(rs.getString(i + 1));
+    public List<String> showDatabases(MysqlInfo mi) {
+
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<String> dbs = null;
+        try {
+            stmt = DBUtil.getConnection(mi).createStatement();
+            String sql = "show databases;";
+            rs = stmt.executeQuery(sql);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int j = rsmd.getColumnCount();
+            dbs = Lists.newArrayList();
+            while (rs.next()) {
+                for (int i = 0; i < j; i++) {
+                    dbs.add(rs.getString(i + 1));
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            DBUtil.closeConnection();
         }
-        return null;
+        return dbs;
     }
 
-    private String getMysqlConnUrl(String host, int port, String database) {
-        if (StringUtils.isNotEmpty(database))
-            return "jdbc:mysql://" + host + ":" + port + "/" + database;
-        else
-            return "jdbc:mysql://" + host + ":" + port;
+    public List<String> showTables(MysqlInfo mi) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<String> tables = null;
+        try {
+            stmt = DBUtil.getConnection(mi).createStatement();
+            String sql = "show tables;";
+            rs = stmt.executeQuery(sql);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int j = rsmd.getColumnCount();
+            tables = Lists.newArrayList();
+            while (rs.next()) {
+                for (int i = 0; i < j; i++) {
+                    tables.add(rs.getString(i + 1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            DBUtil.closeConnection();
+        }
+        return tables;
     }
+
+    public List<ColumnInfo> descTable(MysqlInfo mi) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<ColumnInfo> columns = null;
+        try {
+            stmt = DBUtil.getConnection(mi).createStatement();
+            String sql = "select * from " + mi.getTable() +" where 1=2";
+            rs = stmt.executeQuery(sql);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int j = rsmd.getColumnCount();
+            columns = Lists.newArrayList();
+            for(int i = 1;i<=j;i++){
+                ColumnInfo column = new ColumnInfo(rsmd.getColumnName(i),rsmd.getColumnTypeName(i).split(" ")[0]);
+                columns.add(column);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            DBUtil.closeConnection();
+        }
+        return columns;
+    }
+
 }
