@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <description>Spring公共配置</description>
+
+    <!-- 以静态变量保存ApplicationContext -->
+    <bean class="com.duoqu.commons.web.spring.SpringContextHolder" lazy-init="false" />
+
+    <!-- 定义受环境影响易变的变量 -->
+    <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+    <!--<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />-->
+    <!--<property name="ignoreResourceNotFound" value="true" />-->
+    <!--<property name="locations">-->
+    <!--<list>-->
+    <!--<value>/WEB-INF/config/jdbc.properties</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.duoqu.commons" />
+    <context:component-scan base-package="com.duoqu.rs.common" />
+
+    <bean id="freemarkerConfiguration"
+          class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+        <property name="templateLoaderPath" value="/WEB-INF/template/" />
+    </bean>
+    <bean id="builderService" class="com.duoqu.commons.kraay.service.BuilderService">
+        <property name="savePath" value="/nh/tmp/kraay/" />
+    </bean>
+    <import resource="mvc.xml" />
+</beans>
