@@ -1,4 +1,4 @@
-package ${packaging}.repository;
+package ${packaging}.dao.repository;
 
 import ${packaging}.entity.${className};
 
