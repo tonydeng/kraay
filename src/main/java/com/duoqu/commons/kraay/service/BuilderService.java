@@ -119,6 +119,8 @@ public class BuilderService {
             case "DECIMAL":
                 fieldType = "Double";
                 break;
+            default:
+                fieldType = "String";
         }
         return fieldType;
     }
