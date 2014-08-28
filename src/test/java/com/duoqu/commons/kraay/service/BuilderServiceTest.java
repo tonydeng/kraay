@@ -5,6 +5,7 @@ import com.duoqu.commons.kraay.bean.ColumnInfo;
 import com.duoqu.commons.kraay.bean.MysqlInfo;
 import com.google.common.collect.Lists;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * Created by tonydeng on 14-8-27.
  */
+@Ignore
 public class BuilderServiceTest extends BaseTest {
     @Autowired
     private BuilderService builderService;

@@ -18,31 +18,31 @@
             <bean class="com.duoqu.commons.web.spring.RequestAttributeArgumentResolver"/>
             <bean class="com.duoqu.commons.web.spring.SessionAttributeArgumentResolver"/>
         </mvc:argument-resolvers>
-        <!--<mvc:message-converters register-defaults="true">-->
-            <!--<bean id="jsonConverter" class="com.duoqu.commons.web.spring.FastJsonHttpMessageConverter">-->
-                <!--<property name="supportedMediaTypes">-->
-                    <!--<list>-->
-                        <!--<value>application/json;charset=UTF-8</value>-->
-                    <!--</list>-->
-                <!--</property>-->
-                <!--<property name="serializerFilter">-->
-                    <!--<bean class="com.duoqu.commons.web.spring.StringValueFilter"/>-->
-                <!--</property>-->
-                <!--<property name="serializerFeature">-->
-                    <!--<list>-->
-                        <!--<value>WriteNullStringAsEmpty</value>-->
-                    <!--</list>-->
-                <!--</property>-->
-            <!--</bean>-->
-            <!--<bean id="stringConverter" class="com.duoqu.commons.web.spring.UTF8StringHttpMessageConverter">-->
-                <!--<property name="supportedMediaTypes">-->
-                    <!--<list>-->
-                        <!--<value>text/plain;charset=UTF-8</value>-->
-                        <!--<value>text/html;charset=UTF-8</value>-->
-                    <!--</list>-->
-                <!--</property>-->
-            <!--</bean>-->
-        <!--</mvc:message-converters>-->
+        <mvc:message-converters register-defaults="true">
+            <bean id="jsonConverter" class="com.duoqu.commons.web.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="serializerFilter">
+                    <bean class="com.duoqu.commons.web.spring.StringValueFilter"/>
+                </property>
+                <property name="serializerFeature">
+                    <list>
+                        <value>WriteNullStringAsEmpty</value>
+                    </list>
+                </property>
+            </bean>
+            <bean id="stringConverter" class="com.duoqu.commons.web.spring.UTF8StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
     </mvc:annotation-driven>
 
 
