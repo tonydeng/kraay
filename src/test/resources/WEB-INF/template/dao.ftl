@@ -1,4 +1,4 @@
-package ${packaging}.repository;
+package ${packaging}.dao.repository;
 
 import ${packaging}.entity.${className};
 
@@ -20,9 +20,9 @@ public interface ${className}Dao {
 
 	int count(Map<String, Object> parameters);
 
-	int insert(${className} ${lowerTable}) ;
+	int insert(${className} ${lowerClassName}) ;
 
-	int update(${className} ${lowerTable});
+	int update(${className} ${lowerClassName});
 
 	int delete(Integer id);
 

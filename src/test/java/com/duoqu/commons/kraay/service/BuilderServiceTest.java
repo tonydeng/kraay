@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by tonydeng on 14-8-27.
  */
-@Ignore
+//@Ignore
 public class BuilderServiceTest extends BaseTest {
     @Autowired
     private BuilderService builderService;
@@ -25,22 +25,23 @@ public class BuilderServiceTest extends BaseTest {
     @Before
     public void init(){
         mi = new MysqlInfo();
-        mi.setUser("rs");
-        mi.setPassword("duoqu_rs");
-        mi.setHost("mysql-m.dq.in");
-//        mi.setUser("ebp");
-//        mi.setPassword("123456");
-//        mi.setHost("localhost");
+//        mi.setUser("rs");
+//        mi.setPassword("duoqu_rs");
+//        mi.setHost("mysql-m.dq.in");
+        mi.setUser("ebp");
+        mi.setPassword("123456");
+        mi.setHost("localhost");
         mi.setPort(3306);
     }
     @Test
     public void builderDaoTest(){
-        mi.setDatabase("rs");
-//        mi.setTables(Lists.newArrayList("t_admin_user"));
-
+//        mi.setDatabase("rs");
+//        mi.setTables(Lists.newArrayList("t_upgrade"));
+        mi.setDatabase("ebp");
+        mi.setTables(Lists.newArrayList("t_ebp_book"));
 
         Map<String,List<ColumnInfo>> columns = databaseService.descTable(mi);
-        String packaging = "com.duoqu.rs.dao";
+        String packaging = "com.duoqu.rs";
         builderService.builder(packaging,mi.getDatabase(),columns);
     }
 //    @Test

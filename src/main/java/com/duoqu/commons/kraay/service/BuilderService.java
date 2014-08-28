@@ -54,7 +54,7 @@ public class BuilderService {
             model.put("packaging", packaging);
             model.put("className", className);
             model.put("tableName", table);
-            model.put("lowerTable", className.substring(0, 1).toLowerCase() + className.substring(1));
+            model.put("lowerClassName", className.substring(0, 1).toLowerCase() + className.substring(1));
             model.put("columns", columns);
 
             model.put("fields", fields);
@@ -73,20 +73,24 @@ public class BuilderService {
 
             Template daoTemplate = freemarkerConfiguration.getTemplate("dao.ftl", encoding);
             String daoText = FreeMarkerTemplateUtils.processTemplateIntoString(daoTemplate, model);
-//            log.info(daoText);
-
             FileUtil.saveFile(daoText.getBytes(),path+model.get("className")+"Dao.java");
 
             Template entityTemplate = freemarkerConfiguration.getTemplate("entity.ftl", encoding);
             String enttityText = FreeMarkerTemplateUtils.processTemplateIntoString(entityTemplate, model);
-
-//            log.info(enttityText);
             FileUtil.saveFile(enttityText.getBytes(),path+model.get("className")+".java");
 
             Template sqlmapTemplate = freemarkerConfiguration.getTemplate("sqlmap.ftl", encoding);
             String sqlmapText = FreeMarkerTemplateUtils.processTemplateIntoString(sqlmapTemplate, model);
             FileUtil.saveFile(sqlmapText.getBytes(),path+model.get("className")+"Mapper.xml");
-//            log.info(sqlmapText);
+
+            Template serviceTemplate = freemarkerConfiguration.getTemplate("service.ftl",encoding);
+            String serviceText = FreeMarkerTemplateUtils.processTemplateIntoString(serviceTemplate,model);
+            FileUtil.saveFile(serviceText.getBytes(),path+model.get("className")+"Service.java");
+
+            Template controllerTemplate = freemarkerConfiguration.getTemplate("controller.ftl",encoding);
+            String controllerText = FreeMarkerTemplateUtils.processTemplateIntoString(controllerTemplate,model);
+            FileUtil.saveFile(controllerText.getBytes(),path+model.get("className")+"Controller.java");
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {

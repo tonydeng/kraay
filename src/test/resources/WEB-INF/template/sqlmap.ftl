@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="${packaging}.repository.${className}Dao">
+<mapper namespace="${packaging}.dao.repository.${className}Dao">
 
-    <insert id="insert" parameterType="${lowerTable}">
+    <insert id="insert" parameterType="${lowerClassName}">
         insert into ${tableName}(
         <#list fields as field>
             <#if field.original != "id">
@@ -34,7 +34,7 @@
     </select>
 
 
-    <select id="get" parameterType="string" resultType="${lowerTable}" >
+    <select id="get" parameterType="string" resultType="${lowerClassName}" >
         <![CDATA[
 			select
 			<#list fields as field>
@@ -46,7 +46,7 @@
 		]]>
     </select>
 
-    <update id="update" parameterType="${lowerTable}">
+    <update id="update" parameterType="${lowerClassName}">
         update ${tableName}
         <set>
         <#list fields as field>
@@ -74,7 +74,7 @@
         </where>
     </select>
 
-    <select id="find" parameterType="map" resultType="${lowerTable}" >
+    <select id="find" parameterType="map" resultType="${lowerClassName}" >
             <![CDATA[
     			select
                     <#list fields as field>
