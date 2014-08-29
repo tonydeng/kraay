@@ -1,6 +1,7 @@
 package ${packaging}.back.service;
 
 import ${packaging}.common.orm.Page;
+import com.duoqu.rs.dao.entity.AdminUser;
 import ${packaging}.dao.entity.${className};
 import ${packaging}.dao.repository.${className}Dao;
 import ${packaging}.common.dto.ResultDto;
@@ -9,6 +10,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +75,6 @@ public class ${className}Service {
         } else {//insert
             ${lowerClassName}.setCreateDate(new Date());
             ${lowerClassName}.setCreatorId(user.getId());
-            ${lowerClassName}.setBookCount(0);
 
             if (add(${lowerClassName})) {
                 result.setSuccess(true);

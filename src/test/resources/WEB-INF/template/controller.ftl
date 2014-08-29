@@ -1,9 +1,13 @@
 package ${packaging}.back.controller;
 
+import com.duoqu.commons.web.spring.SessionAttribute;
 import ${packaging}.back.service.${className}Service;
 import ${packaging}.common.orm.Page;
+import com.duoqu.rs.common.dto.ResultDto;
 import ${packaging}.dao.entity.${className};
+import com.duoqu.rs.dao.entity.AdminUser;
 import org.apache.commons.lang3.StringUtils;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,7 +30,7 @@ public class ${className}Controller {
 
     @RequestMapping("list.do")
     @ResponseBody
-    public Page<${className}Dto> list(
+    public Page<${className}> list(
             HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "id", required = false) Integer id,

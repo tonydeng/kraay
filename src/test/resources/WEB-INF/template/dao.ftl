@@ -1,6 +1,6 @@
 package ${packaging}.dao.repository;
 
-import ${packaging}.entity.${className};
+import ${packaging}.dao.entity.${className};
 
 import java.util.List;
 import java.util.Map;

@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by tonydeng on 14-8-27.
  */
-@Ignore
+//@Ignore
 public class BuilderServiceTest extends BaseTest {
     @Autowired
     private BuilderService builderService;
