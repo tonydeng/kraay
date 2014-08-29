@@ -69,27 +69,26 @@ public class BuilderService {
         try {
             String path = savePath+model.get("className")+"/";
 
-            log.info("path:'"+path+"'");
 
             Template daoTemplate = freemarkerConfiguration.getTemplate("dao.ftl", encoding);
             String daoText = FreeMarkerTemplateUtils.processTemplateIntoString(daoTemplate, model);
-            FileUtil.saveFile(daoText.getBytes(),path+model.get("className")+"Dao.java");
+            FileUtil.saveFile(daoText.getBytes(),savePath+File.separator+"dao"+File.separator+model.get("className")+"Dao.java");
 
             Template entityTemplate = freemarkerConfiguration.getTemplate("entity.ftl", encoding);
             String enttityText = FreeMarkerTemplateUtils.processTemplateIntoString(entityTemplate, model);
-            FileUtil.saveFile(enttityText.getBytes(),path+model.get("className")+".java");
+            FileUtil.saveFile(enttityText.getBytes(),savePath+File.separator+"entity"+File.separator+model.get("className")+".java");
 
             Template sqlmapTemplate = freemarkerConfiguration.getTemplate("sqlmap.ftl", encoding);
             String sqlmapText = FreeMarkerTemplateUtils.processTemplateIntoString(sqlmapTemplate, model);
-            FileUtil.saveFile(sqlmapText.getBytes(),path+model.get("className")+"Mapper.xml");
+            FileUtil.saveFile(sqlmapText.getBytes(),savePath+File.separator+"sqlmap"+File.separator+model.get("className")+"Mapper.xml");
 
             Template serviceTemplate = freemarkerConfiguration.getTemplate("service.ftl",encoding);
             String serviceText = FreeMarkerTemplateUtils.processTemplateIntoString(serviceTemplate,model);
-            FileUtil.saveFile(serviceText.getBytes(),path+model.get("className")+"Service.java");
+            FileUtil.saveFile(serviceText.getBytes(),savePath+File.separator+"service"+File.separator+model.get("className")+"Service.java");
 
             Template controllerTemplate = freemarkerConfiguration.getTemplate("controller.ftl",encoding);
             String controllerText = FreeMarkerTemplateUtils.processTemplateIntoString(controllerTemplate,model);
-            FileUtil.saveFile(controllerText.getBytes(),path+model.get("className")+"Controller.java");
+            FileUtil.saveFile(controllerText.getBytes(),savePath+File.separator+"controller"+File.separator+model.get("className")+"Controller.java");
 
         } catch (IOException e) {
             e.printStackTrace();
