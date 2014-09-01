@@ -95,7 +95,6 @@ public class BuilderService {
         } catch (TemplateException e) {
             e.printStackTrace();
         }
-
     }
 
     private String getFieldType(String type) {
@@ -114,7 +113,7 @@ public class BuilderService {
                 fieldType = "Date";
                 break;
             case "TINYINT":
-                fieldType = "Boolean";
+                fieldType = "Integer";
                 break;
             case "BIGINT":
                 fieldType = "Long";
@@ -122,6 +121,8 @@ public class BuilderService {
             case "DECIMAL":
                 fieldType = "Double";
                 break;
+            case "TEXT":
+                fieldType = "String";
             default:
                 fieldType = "String";
         }
