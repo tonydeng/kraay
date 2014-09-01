@@ -34,13 +34,11 @@
     </select>
 
 
-    <select id="get" parameterType="string" resultType="${lowerClassName}" >
+    <select id="get" parameterType="int" resultType="${lowerClassName}" >
         <![CDATA[
 			select
 			<#list fields as field>
-                <#if field.original != "id">
-                    ${field.original} ${field.lower}<#if field_has_next>,</#if>
-                </#if>
+                ${field.original} ${field.lower}<#if field_has_next>,</#if>
             </#list>
 			from ${tableName} where id=${well}{id}
 		]]>
