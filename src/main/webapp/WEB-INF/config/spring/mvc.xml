@@ -25,10 +25,10 @@
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
-                <property name="serializerFilter">
+                <property name="filter">
                     <bean class="com.duoqu.commons.web.spring.StringValueFilter"/>
                 </property>
-                <property name="serializerFeature">
+                <property name="features">
                     <list>
                         <value>WriteNullStringAsEmpty</value>
                     </list>
