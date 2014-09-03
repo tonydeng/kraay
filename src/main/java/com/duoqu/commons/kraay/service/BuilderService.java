@@ -2,6 +2,7 @@ package com.duoqu.commons.kraay.service;
 
 import com.duoqu.commons.kraay.bean.ColumnInfo;
 import com.duoqu.commons.kraay.bean.Field;
+import com.duoqu.commons.kraay.bean.TemplateConfig;
 import com.duoqu.commons.utils.CompressUtil;
 import com.duoqu.commons.utils.FileUtil;
 import com.google.common.collect.Lists;
@@ -31,7 +32,7 @@ public class BuilderService {
     @Autowired
     private Configuration freemarkerConfiguration;
 
-    public void builder(String packaging,String database, Map<String, List<ColumnInfo>> columns) {
+    public void builder(String packaging, String database, Map<String, List<ColumnInfo>> columns) {
 
         FileUtil.delFolder(savePath);
 
@@ -58,37 +59,21 @@ public class BuilderService {
             model.put("columns", columns);
 
             model.put("fields", fields);
-            model.put("well",well);
+            model.put("well", well);
             writeFile(model);
         }
 
-        CompressUtil.zipFile(savePath,new File(savePath).getParent()+File.separator+database+".zip");
+        CompressUtil.zipFile(savePath, new File(savePath).getParent() + File.separator + database + ".zip");
     }
 
     private void writeFile(Map model) {
         try {
-            String path = savePath+model.get("className")+"/";
 
-
-            Template daoTemplate = freemarkerConfiguration.getTemplate("dao.ftl", encoding);
-            String daoText = FreeMarkerTemplateUtils.processTemplateIntoString(daoTemplate, model);
-            FileUtil.saveFile(daoText.getBytes(),savePath+File.separator+"dao"+File.separator+model.get("className")+"Dao.java");
-
-            Template entityTemplate = freemarkerConfiguration.getTemplate("entity.ftl", encoding);
-            String enttityText = FreeMarkerTemplateUtils.processTemplateIntoString(entityTemplate, model);
-            FileUtil.saveFile(enttityText.getBytes(),savePath+File.separator+"entity"+File.separator+model.get("className")+".java");
-
-            Template sqlmapTemplate = freemarkerConfiguration.getTemplate("sqlmap.ftl", encoding);
-            String sqlmapText = FreeMarkerTemplateUtils.processTemplateIntoString(sqlmapTemplate, model);
-            FileUtil.saveFile(sqlmapText.getBytes(),savePath+File.separator+"sqlmap"+File.separator+model.get("className")+"Mapper.xml");
-
-            Template serviceTemplate = freemarkerConfiguration.getTemplate("service.ftl",encoding);
-            String serviceText = FreeMarkerTemplateUtils.processTemplateIntoString(serviceTemplate,model);
-            FileUtil.saveFile(serviceText.getBytes(),savePath+File.separator+"service"+File.separator+model.get("className")+"Service.java");
-
-            Template controllerTemplate = freemarkerConfiguration.getTemplate("controller.ftl",encoding);
-            String controllerText = FreeMarkerTemplateUtils.processTemplateIntoString(controllerTemplate,model);
-            FileUtil.saveFile(controllerText.getBytes(),savePath+File.separator+"controller"+File.separator+model.get("className")+"Controller.java");
+            for(TemplateConfig config: getTemplates(model)){
+                Template template = freemarkerConfiguration.getTemplate(config.getTempateName(), encoding);
+                String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+                FileUtil.saveFile(content.getBytes(), config.getTargetFile());
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,6 +81,17 @@ public class BuilderService {
             e.printStackTrace();
         }
     }
+
+    private List<TemplateConfig> getTemplates(Map model) {
+        return Lists.newArrayList(
+                new TemplateConfig("dao.ftl", savePath + File.separator + "dao" + File.separator + model.get("className") + "Dao.java"),
+                new TemplateConfig("entity.ftl", savePath + File.separator + "entity" + File.separator + model.get("className") + ".java"),
+                new TemplateConfig("sqlmap.ftl", savePath + File.separator + "sqlmap" + File.separator + model.get("className") + "Mapper.xml"),
+                new TemplateConfig("service.ftl", savePath + File.separator + "service" + File.separator + model.get("className") + "Service.java"),
+                new TemplateConfig("controller.ftl", savePath + File.separator + "controller" + File.separator + model.get("className") + "Controller.java")
+        );
+    }
+
 
     private String getFieldType(String type) {
         String fieldType = null;

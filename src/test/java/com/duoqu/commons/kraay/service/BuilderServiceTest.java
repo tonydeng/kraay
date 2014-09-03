@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by tonydeng on 14-8-27.
  */
-@Ignore
+//@Ignore
 public class BuilderServiceTest extends BaseTest {
     @Autowired
     private BuilderService builderService;
@@ -36,7 +36,8 @@ public class BuilderServiceTest extends BaseTest {
     @Test
     public void builderDaoTest(){
         mi.setDatabase("rs");
-//        mi.setTables(Lists.newArrayList("t_upgrade"));
+        mi.setTables(Lists.newArrayList("t_upgrade","t_book"));
+
 //        mi.setDatabase("ebp");
 //        mi.setTables(Lists.newArrayList("t_ebp_book"));
 
