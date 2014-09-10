@@ -206,6 +206,17 @@
             </snapshots>
         </repository>
         <repository>
+            <id>duoqu maven snapshots repo</id>
+            <url>http://mvn.dq.in/snapshots</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>oschina nexus</id>
             <url>http://maven.oschina.net/content/groups/public/</url>
             <snapshots>
