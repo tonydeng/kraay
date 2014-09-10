@@ -6,7 +6,6 @@ import ${packaging}.dao.entity.${className};
 import ${packaging}.dao.repository.${className}Dao;
 import ${packaging}.common.dto.ResultDto;
 import com.google.common.collect.Maps;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
