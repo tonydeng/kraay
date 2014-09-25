@@ -27,4 +27,8 @@ public interface ${className}Dao {
 	int delete(Integer id);
 
 	int delete(List<Integer> ids);
+
+	int insertBatch(List<${className}> list);
+
+	int updateBatch(List<${className}> list);
 }

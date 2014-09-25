@@ -36,11 +36,11 @@
 
     <select id="get" parameterType="int" resultType="${lowerClassName}" >
         <![CDATA[
-			select
+		select
 			<#list fields as field>
                 ${field.original} ${field.lower}<#if field_has_next>,</#if>
             </#list>
-			from ${tableName} where id=${well}{id}
+		from ${tableName} where id=${well}{id}
 		]]>
     </select>
 
@@ -53,7 +53,6 @@
                     ${field.original} = ${well}{${field.lower}}<#if field_has_next>,</#if>
                  </if>
             </#if>
-
         </#list>
         </set>
         where id=${well}{id}
@@ -105,4 +104,40 @@
                 ${well}{id}
             </foreach>
         </delete>
+
+        <insert id="insertBatch" parameterType="java.util.List">
+            insert into ${tableName}(
+            <#list fields as field>
+                <#if field.original != "id">
+                    ${field.original}<#if field_has_next>,</#if>
+                </#if>
+            </#list>
+            )
+            values
+            <foreach collection="list" item="item" index="index" separator="," >
+                (
+            <#list fields as field>
+                <#if field.lower != "id">
+                    ${well}{item.${field.lower}}<#if field_has_next>,</#if>
+                </#if>
+            </#list>
+                )
+            </foreach>
+        </insert>
+
+        <update id="updateBatch" parameterType="java.util.List">
+            <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update ${tableName}
+                <set>
+                <#list fields as field>
+                    <#if field.original != "id">
+                         <if test="item.${field.lower} != null">
+                            ${field.original} = ${well}{item.${field.lower}}<#if field_has_next>,</#if>
+                         </if>
+                    </#if>
+                </#list>
+                </set>
+                where id = ${well}{item.id}
+            </foreach>
+        </update>
 </mapper>
