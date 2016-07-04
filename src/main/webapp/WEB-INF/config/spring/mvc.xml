@@ -15,18 +15,18 @@
 		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
-            <bean class="com.duoqu.commons.web.spring.RequestAttributeArgumentResolver"/>
-            <bean class="com.duoqu.commons.web.spring.SessionAttributeArgumentResolver"/>
+            <bean class="com.cim120.commons.web.spring.RequestAttributeArgumentResolver"/>
+            <bean class="com.cim120.commons.web.spring.SessionAttributeArgumentResolver"/>
         </mvc:argument-resolvers>
         <mvc:message-converters register-defaults="true">
-            <bean id="jsonConverter" class="com.duoqu.commons.web.spring.FastJsonHttpMessageConverter">
+            <bean id="jsonConverter" class="com.cim120.commons.web.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
                 <property name="filter">
-                    <bean class="com.duoqu.commons.web.spring.StringValueFilter"/>
+                    <bean class="com.cim120.commons.web.spring.StringValueFilter"/>
                 </property>
                 <property name="features">
                     <list>
@@ -34,7 +34,7 @@
                     </list>
                 </property>
             </bean>
-            <bean id="stringConverter" class="com.duoqu.commons.web.spring.UTF8StringHttpMessageConverter">
+            <bean id="stringConverter" class="com.cim120.commons.web.spring.UTF8StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>text/plain;charset=UTF-8</value>
@@ -46,7 +46,7 @@
     </mvc:annotation-driven>
 
 
-    <mvc:resources mapping="/scripts/**" location="/scripts/" cache-period="31556926"/>
+    <!--<mvc:resources mapping="/scripts/**" location="/scripts/" cache-period="31556926"/>-->
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>

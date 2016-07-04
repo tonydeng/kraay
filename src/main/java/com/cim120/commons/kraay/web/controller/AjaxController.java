@@ -1,7 +1,8 @@
-package com.duoqu.commons.kraay.web.controller;
+package com.cim120.commons.kraay.web.controller;
 
-import com.duoqu.commons.kraay.bean.MysqlInfo;
-import com.duoqu.commons.kraay.service.DatabaseService;
+import com.cim120.commons.kraay.bean.MysqlInfo;
+import com.cim120.commons.kraay.service.DatabaseService;
+import com.cim120.commons.kraay.utils.DBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class AjaxController {
         mi.setHost(host);
         mi.setPort(port);
 
-        return databaseService.showDatabases(mi);
+        return databaseService.getDatabaseOrTables(mi, DBUtil.Info.DB);
     }
 
     @RequestMapping("/table.do")
@@ -52,6 +53,6 @@ public class AjaxController {
         mi.setPort(port);
         mi.setDatabase(database);
 
-        return databaseService.showTables(mi);
+        return databaseService.getDatabaseOrTables(mi, DBUtil.Info.Table);
     }
 }

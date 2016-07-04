@@ -1,4 +1,4 @@
-package com.duoqu.commons.kraay.bean;
+package com.cim120.commons.kraay.bean;
 
 import java.util.List;
 

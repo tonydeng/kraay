@@ -14,7 +14,7 @@
     <description>Spring公共配置</description>
 
     <!-- 以静态变量保存ApplicationContext -->
-    <bean class="com.duoqu.commons.web.spring.SpringContextHolder" lazy-init="false"/>
+    <bean class="com.cim120.commons.web.spring.SpringContextHolder" lazy-init="false"/>
 
     <!-- 定义受环境影响易变的变量 -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -27,18 +27,20 @@
         </property>
     </bean>
 
-    <util:properties id="kraayConfig" location="/WEB-INF/config/config-kraay.properties" />
+    <util:properties id="kraayConfig" location="/WEB-INF/config/config-kraay.properties"/>
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.duoqu.commons"/>
-    <context:component-scan base-package="com.duoqu.rs.common"/>
+    <context:component-scan base-package="com.cim120.commons.kraay"/>
 
     <bean id="freemarkerConfiguration"
           class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
         <property name="templateLoaderPath" value="classpath:/template/"/>
+        <property name="preferFileSystemAccess" value="false"/>
+        <property name="defaultEncoding" value="UTF-8" />
     </bean>
-    <bean id="builderService" class="com.duoqu.commons.kraay.service.BuilderService">
+
+    <bean id="builderService" class="com.cim120.commons.kraay.service.BuilderService">
         <property name="savePath" value="${savePath}"/>
     </bean>
     <import resource="mvc.xml"/>

@@ -1,8 +1,9 @@
-package com.duoqu.commons.kraay.service;
+package com.cim120.commons.kraay.service;
 
-import com.duoqu.commons.BaseTest;
-import com.duoqu.commons.kraay.bean.ColumnInfo;
-import com.duoqu.commons.kraay.bean.MysqlInfo;
+import com.cim120.commons.BaseTest;
+import com.cim120.commons.kraay.bean.MysqlInfo;
+import com.cim120.commons.kraay.utils.DBUtil;
+import com.cim120.commons.kraay.bean.ColumnInfo;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -31,7 +32,7 @@ public class DatabaseServiceTest extends BaseTest {
     }
 //    @Test
     public void showDatabaseTest() throws SQLException, ClassNotFoundException {
-        List<String> list = databaseService.showDatabases(mi);
+        List<String> list = databaseService.getDatabaseOrTables(mi, DBUtil.Info.DB);
         for(String db:list){
             log.info(db);
         }
@@ -40,7 +41,7 @@ public class DatabaseServiceTest extends BaseTest {
 //    @Test
     public void showTablesTest() throws SQLException, ClassNotFoundException {
         mi.setDatabase("ebp");
-        List<String> list = databaseService.showTables(mi);
+        List<String> list = databaseService.getDatabaseOrTables(mi, DBUtil.Info.Table);
         for(String table:list){
             log.info(table);
         }

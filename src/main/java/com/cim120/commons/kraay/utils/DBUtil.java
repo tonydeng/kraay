@@ -1,6 +1,6 @@
-package com.duoqu.commons.kraay.utils;
+package com.cim120.commons.kraay.utils;
 
-import com.duoqu.commons.kraay.bean.MysqlInfo;
+import com.cim120.commons.kraay.bean.MysqlInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,4 +50,10 @@ public class DBUtil {
             return "jdbc:mysql://" + host + ":" + port;
     }
 
+    /**
+     *
+     */
+    public enum Info{
+        DB,Table
+    }
 }

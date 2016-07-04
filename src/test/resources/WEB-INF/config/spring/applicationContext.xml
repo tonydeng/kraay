@@ -33,7 +33,7 @@
           class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
         <property name="templateLoaderPath" value="classpath:/template/" />
     </bean>
-    <bean id="builderService" class="com.duoqu.commons.kraay.service.BuilderService">
+    <bean id="builderService" class="com.cim120.commons.kraay.service.BuilderService">
         <property name="savePath" value="${savePath}" />
     </bean>
 </beans>

@@ -1,16 +1,16 @@
-package com.duoqu.commons.kraay.service;
+package com.cim120.commons.kraay.service;
 
-import com.duoqu.commons.BaseTest;
-import com.duoqu.commons.kraay.bean.ColumnInfo;
-import com.duoqu.commons.kraay.bean.MysqlInfo;
+import com.cim120.commons.BaseTest;
+import com.cim120.commons.kraay.bean.MysqlInfo;
+import com.cim120.commons.kraay.bean.ColumnInfo;
 import com.google.common.collect.Lists;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by tonydeng on 14-8-27.

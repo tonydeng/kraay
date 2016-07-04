@@ -1,6 +1,6 @@
-package com.duoqu.commons.kraay.web.formbean;
+package com.cim120.commons.kraay.web.formbean;
 
-import com.duoqu.commons.kraay.bean.MysqlInfo;
+import com.cim120.commons.kraay.bean.MysqlInfo;
 
 /**
  * Created by tonydeng on 14-8-28.

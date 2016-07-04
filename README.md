@@ -4,7 +4,7 @@
 
 ### 代码生成器访问地址
 
-http://kraay.dq.in
+http://kraay.cim.in
 
 ##### 项目名称来由
 

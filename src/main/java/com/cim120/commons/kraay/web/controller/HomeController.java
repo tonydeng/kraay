@@ -1,9 +1,9 @@
-package com.duoqu.commons.kraay.web.controller;
+package com.cim120.commons.kraay.web.controller;
 
-import com.duoqu.commons.kraay.bean.ColumnInfo;
-import com.duoqu.commons.kraay.service.BuilderService;
-import com.duoqu.commons.kraay.service.DatabaseService;
-import com.duoqu.commons.kraay.web.formbean.MybatisForm;
+import com.cim120.commons.kraay.bean.ColumnInfo;
+import com.cim120.commons.kraay.service.BuilderService;
+import com.cim120.commons.kraay.service.DatabaseService;
+import com.cim120.commons.kraay.web.formbean.MybatisForm;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

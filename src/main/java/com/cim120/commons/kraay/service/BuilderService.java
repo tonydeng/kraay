@@ -1,19 +1,19 @@
-package com.duoqu.commons.kraay.service;
+package com.cim120.commons.kraay.service;
 
-import com.duoqu.commons.kraay.bean.ColumnInfo;
-import com.duoqu.commons.kraay.bean.Field;
-import com.duoqu.commons.kraay.bean.TemplateConfig;
-import com.duoqu.commons.utils.CompressUtil;
-import com.duoqu.commons.utils.FileUtil;
+import com.cim120.commons.kraay.bean.TemplateConfig;
+import com.cim120.commons.utils.CompressUtil;
+import com.cim120.commons.utils.FileUtil;
+import com.cim120.commons.kraay.bean.ColumnInfo;
+import com.cim120.commons.kraay.bean.Field;
 import com.google.common.collect.Lists;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +29,7 @@ public class BuilderService {
     private static final String table_prefix = "t_";
     private static final String well = "#";
     private static String savePath;
-    @Autowired
+    @Resource
     private Configuration freemarkerConfiguration;
 
     public void builder(String packaging, String database, Map<String, List<ColumnInfo>> columns) {

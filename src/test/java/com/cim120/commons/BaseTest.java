@@ -1,4 +1,4 @@
-package com.duoqu.commons;
+package com.cim120.commons;
 
 
 import org.junit.Test;
