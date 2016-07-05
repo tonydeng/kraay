@@ -1,5 +1,6 @@
 package com.github.tonydeng.kraay.service;
 
+import com.github.tonydeng.kraay.Constant;
 import com.github.tonydeng.kraay.bean.ColumnInfo;
 import com.github.tonydeng.kraay.bean.MysqlInfo;
 import com.github.tonydeng.kraay.utils.DBUtil;
@@ -25,7 +26,7 @@ public class DatabaseService {
 
     public Map<String, List<ColumnInfo>> descTable(MysqlInfo mi) {
         if(CollectionUtils.isEmpty(mi.getTables())){
-            mi.setTables(getDatabaseOrTables(mi, DBUtil.Info.Table));
+            mi.setTables(getDatabaseOrTables(mi, Constant.MySQLSelect.Table));
         }
         Statement stmt = null;
         ResultSet rs = null;
@@ -68,14 +69,16 @@ public class DatabaseService {
         return result;
     }
 
-    public List<String> getDatabaseOrTables(MysqlInfo mi, DBUtil.Info info){
+    public List<String> getDatabaseOrTables(MysqlInfo mi, Constant.MySQLSelect select){
         Statement stmt = null;
         ResultSet rs = null;
         List<String> list = Lists.newArrayList();
         try {
+            if(log.isDebugEnabled())
+                log.debug("mysql info : {}",mi);
             stmt = DBUtil.getConnection(mi).createStatement();
             String sql = null;
-            switch (info){
+            switch (select){
                 case DB:
                     sql = "show databases;";
                     break;

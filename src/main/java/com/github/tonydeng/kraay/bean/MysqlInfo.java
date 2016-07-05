@@ -1,5 +1,7 @@
 package com.github.tonydeng.kraay.bean;
 
+import com.github.tonydeng.kraay.Constant;
+
 import java.util.List;
 
 /**
@@ -38,6 +40,8 @@ public class MysqlInfo {
     }
 
     public int getPort() {
+        if (port == 0)
+            setPort(Constant.PORT);
         return port;
     }
 
@@ -59,5 +63,17 @@ public class MysqlInfo {
 
     public void setTables(List<String> tables) {
         this.tables = tables;
+    }
+
+    @Override
+    public String toString() {
+        return "MysqlInfo{" +
+                "user='" + user + '\'' +
+                ", password='" + password + '\'' +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                ", database='" + database + '\'' +
+                ", tables=" + tables +
+                '}';
     }
 }

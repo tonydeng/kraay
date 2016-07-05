@@ -1,8 +1,8 @@
 package com.github.tonydeng.kraay.web.controller;
 
+import com.github.tonydeng.kraay.Constant;
 import com.github.tonydeng.kraay.bean.MysqlInfo;
 import com.github.tonydeng.kraay.service.DatabaseService;
-import com.github.tonydeng.kraay.utils.DBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,7 +36,7 @@ public class AjaxController {
         mi.setHost(host);
         mi.setPort(port);
 
-        return databaseService.getDatabaseOrTables(mi, DBUtil.Info.DB);
+        return databaseService.getDatabaseOrTables(mi, Constant.MySQLSelect.DB);
     }
 
     @RequestMapping("/table.do")
@@ -53,6 +53,6 @@ public class AjaxController {
         mi.setPort(port);
         mi.setDatabase(database);
 
-        return databaseService.getDatabaseOrTables(mi, DBUtil.Info.Table);
+        return databaseService.getDatabaseOrTables(mi, Constant.MySQLSelect.Table);
     }
 }

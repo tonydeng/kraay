@@ -1,5 +1,6 @@
 package com.github.tonydeng.kraay.web.controller;
 
+import com.github.tonydeng.kraay.Constant;
 import com.github.tonydeng.kraay.bean.ColumnInfo;
 import com.github.tonydeng.kraay.service.BuilderService;
 import com.github.tonydeng.kraay.service.DatabaseService;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -26,8 +28,6 @@ import java.util.Properties;
 public class HomeController {
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-    private String packaging = "com.duoqu";
-
     @Resource
     private DatabaseService databaseService;
     @Resource
@@ -40,19 +40,20 @@ public class HomeController {
         model.put("form", new MybatisForm());
         return "home/index";
     }
+
     @RequestMapping("/build.do")
-    public String build(MybatisForm form, ModelMap model){
-        if(StringUtils.isNotEmpty(form.getTable())){
+    public String build(@ModelAttribute MybatisForm form, ModelMap model) {
+
+        if (StringUtils.isNotEmpty(form.getTable())) {
             form.getMi().setTables(Lists.newArrayList(form.getTable()));
         }
-        if(StringUtils.isNotEmpty(form.getPackaging())){
-            packaging = form.getPackaging();
-        }
-        log.info("Mybatisform {}",form);
-        Map<String,List<ColumnInfo>> columns = databaseService.descTable(form.getMi());
-        builderService.builder(packaging,form.getMi().getDatabase(),columns);
-        model.put("downloadUrl",kraayConfig.get("download.url")+form.getMi().getDatabase()+".zip");
-        model.put("filename",form.getMi().getDatabase()+".zip");
+        if (log.isDebugEnabled())
+            log.debug("mybatisform : {} mysql info {} package {}", form, form.getMi(), form.getPackaging());
+
+        Map<String, List<ColumnInfo>> columns = databaseService.descTable(form.getMi());
+        builderService.builder(form.getPackaging(), form.getMi().getDatabase(), columns);
+        model.put("downloadUrl", kraayConfig.get("download.url") + form.getMi().getDatabase() + ".zip");
+        model.put("filename", form.getMi().getDatabase() + ".zip");
         return "home/build";
     }
 }

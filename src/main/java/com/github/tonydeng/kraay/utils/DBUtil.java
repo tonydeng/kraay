@@ -49,11 +49,4 @@ public class DBUtil {
         else
             return "jdbc:mysql://" + host + ":" + port;
     }
-
-    /**
-     *
-     */
-    public enum Info{
-        DB,Table
-    }
 }

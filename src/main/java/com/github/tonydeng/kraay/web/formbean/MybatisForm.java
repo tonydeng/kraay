@@ -1,6 +1,8 @@
 package com.github.tonydeng.kraay.web.formbean;
 
+import com.github.tonydeng.kraay.Constant;
 import com.github.tonydeng.kraay.bean.MysqlInfo;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by tonydeng on 14-8-28.
@@ -9,6 +11,7 @@ public class MybatisForm {
     private MysqlInfo mi;
     private String table;
     private String packaging;
+
     public MysqlInfo getMi() {
         return mi;
     }
@@ -26,6 +29,8 @@ public class MybatisForm {
     }
 
     public String getPackaging() {
+        if (StringUtils.isEmpty(packaging))
+            setPackaging(Constant.PACKAING);
         return packaging;
     }
 
