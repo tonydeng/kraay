@@ -26,8 +26,7 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.duoqu.commons" />
-    <context:component-scan base-package="com.duoqu.rs.common" />
+    <context:component-scan base-package="com.github.tonydeng.kraay" />
 
     <bean id="freemarkerConfiguration"
           class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
