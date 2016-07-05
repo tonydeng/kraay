@@ -46,13 +46,30 @@
     </mvc:annotation-driven>
 
 
-    <!--<mvc:resources mapping="/scripts/**" location="/scripts/" cache-period="31556926"/>-->
+    <mvc:resources mapping="/static/**" location="/static/" cache-period="31556926"/>
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <!--最好以"/"结尾，针对返回值为void类型有用 -->
-        <property name="suffix" value=".jsp"/>
+    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
+        <!--<property name="prefix" value="/WEB-INF/jsp/"/>-->
+        <!--&lt;!&ndash;最好以"/"结尾，针对返回值为void类型有用 &ndash;&gt;-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
+
+    <bean id="viewResolver" class="jetbrick.template.web.springmvc.JetTemplateViewResolver">
+        <property name="order" value="1" />
+        <property name="contentType" value="text/html; charset=utf-8" />
+        <property name="suffix" value=".html" />
+
+        <!-- 指定配置文件 -->
+        <property name="configLocation" value="/WEB-INF/config/jetbrick-template.properties" />
+
+        <!-- 直接配置属性 -->
+        <property name="configProperties">
+            <props>
+                <prop key="jetx.input.encoding">utf-8</prop>
+                <prop key="jetx.output.encoding">utf-8</prop>
+            </props>
+        </property>
     </bean>
 
 

@@ -1,8 +1,8 @@
-package com.cim120.commons.kraay.service;
+package com.github.tonydeng.kraay.service;
 
-import com.cim120.commons.BaseTest;
-import com.cim120.commons.kraay.bean.MysqlInfo;
-import com.cim120.commons.kraay.bean.ColumnInfo;
+import com.github.tonydeng.kraay.BaseTest;
+import com.github.tonydeng.kraay.bean.MysqlInfo;
+import com.github.tonydeng.kraay.bean.ColumnInfo;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;

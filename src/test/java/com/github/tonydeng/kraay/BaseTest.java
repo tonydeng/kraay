@@ -1,4 +1,4 @@
-package com.cim120.commons;
+package com.github.tonydeng.kraay;
 
 
 import org.junit.Test;

@@ -31,16 +31,16 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.cim120.commons.kraay"/>
+    <context:component-scan base-package="com.github.tonydeng.kraay"/>
 
-    <bean id="freemarkerConfiguration"
+    <bean id="freemarker"
           class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
         <property name="templateLoaderPath" value="classpath:/template/"/>
         <property name="preferFileSystemAccess" value="false"/>
         <property name="defaultEncoding" value="UTF-8" />
     </bean>
 
-    <bean id="builderService" class="com.cim120.commons.kraay.service.BuilderService">
+    <bean id="builderService" class="com.github.tonydeng.kraay.service.BuilderService">
         <property name="savePath" value="${savePath}"/>
     </bean>
     <import resource="mvc.xml"/>

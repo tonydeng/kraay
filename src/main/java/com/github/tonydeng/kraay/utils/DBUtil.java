@@ -1,6 +1,6 @@
-package com.cim120.commons.kraay.utils;
+package com.github.tonydeng.kraay.utils;
 
-import com.cim120.commons.kraay.bean.MysqlInfo;
+import com.github.tonydeng.kraay.bean.MysqlInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

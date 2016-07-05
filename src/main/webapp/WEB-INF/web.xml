@@ -14,6 +14,12 @@
         <param-name>logbackConfigLocation</param-name>
         <param-value>/WEB-INF/config/logback.xml</param-value>
     </context-param>
+    <context-param>
+        <param-name>jetbrick-template-config-location</param-name>
+        <param-value>/WEB-INF/config/jetbrick-template.properties</param-value>
+    </context-param>
+
+
     <listener>
         <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
     </listener>

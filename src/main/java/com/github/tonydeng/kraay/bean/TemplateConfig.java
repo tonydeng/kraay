@@ -1,4 +1,4 @@
-package com.cim120.commons.kraay.bean;
+package com.github.tonydeng.kraay.bean;
 
 /**
  * Created by tonydeng on 14-9-3.

@@ -1,10 +1,10 @@
-package com.cim120.commons.kraay.service;
+package com.github.tonydeng.kraay.service;
 
-import com.cim120.commons.kraay.bean.TemplateConfig;
+import com.github.tonydeng.kraay.bean.TemplateConfig;
 import com.cim120.commons.utils.CompressUtil;
 import com.cim120.commons.utils.FileUtil;
-import com.cim120.commons.kraay.bean.ColumnInfo;
-import com.cim120.commons.kraay.bean.Field;
+import com.github.tonydeng.kraay.bean.ColumnInfo;
+import com.github.tonydeng.kraay.bean.Field;
 import com.google.common.collect.Lists;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -28,9 +28,11 @@ public class BuilderService {
     private static final String encoding = "UTF-8";
     private static final String table_prefix = "t_";
     private static final String well = "#";
-    private static String savePath;
+
+    private String savePath;
+
     @Resource
-    private Configuration freemarkerConfiguration;
+    private Configuration freemarker;
 
     public void builder(String packaging, String database, Map<String, List<ColumnInfo>> columns) {
 
@@ -63,14 +65,14 @@ public class BuilderService {
             writeFile(model);
         }
 
-        CompressUtil.zipFile(savePath, new File(savePath).getParent() + File.separator + database + ".zip");
+        CompressUtil.zipFile(savePath, new File(getSavePath()).getParent() + File.separator + database + ".zip");
     }
 
     private void writeFile(Map model) {
         try {
 
             for(TemplateConfig config: getTemplates(model)){
-                Template template = freemarkerConfiguration.getTemplate(config.getTempateName(), encoding);
+                Template template = freemarker.getTemplate(config.getTempateName(), encoding);
                 String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
                 FileUtil.saveFile(content.getBytes(), config.getTargetFile());
             }
@@ -161,11 +163,11 @@ public class BuilderService {
         return sb.toString();
     }
 
-    public static String getSavePath() {
+    public  String getSavePath() {
         return savePath;
     }
 
-    public static void setSavePath(String savePath) {
-        BuilderService.savePath = savePath;
+    public  void setSavePath(String savePath) {
+        this.savePath = savePath;
     }
 }

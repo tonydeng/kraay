@@ -1,16 +1,16 @@
-package com.cim120.commons.kraay.web.controller;
+package com.github.tonydeng.kraay.web.controller;
 
-import com.cim120.commons.kraay.bean.MysqlInfo;
-import com.cim120.commons.kraay.service.DatabaseService;
-import com.cim120.commons.kraay.utils.DBUtil;
+import com.github.tonydeng.kraay.bean.MysqlInfo;
+import com.github.tonydeng.kraay.service.DatabaseService;
+import com.github.tonydeng.kraay.utils.DBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ import java.util.List;
 public class AjaxController {
     private static final Logger log = LoggerFactory.getLogger(AjaxController.class);
 
-    @Autowired
+    @Resource
     private DatabaseService databaseService;
 
     @RequestMapping("/db.do")

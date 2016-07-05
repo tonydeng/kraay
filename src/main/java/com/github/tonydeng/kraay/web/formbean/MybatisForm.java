@@ -1,6 +1,6 @@
-package com.cim120.commons.kraay.web.formbean;
+package com.github.tonydeng.kraay.web.formbean;
 
-import com.cim120.commons.kraay.bean.MysqlInfo;
+import com.github.tonydeng.kraay.bean.MysqlInfo;
 
 /**
  * Created by tonydeng on 14-8-28.
