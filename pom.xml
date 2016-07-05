@@ -23,9 +23,7 @@
         <spring.version>4.2.5.RELEASE</spring.version>
         <mysql.version>5.1.30</mysql.version>
         <freemarker.version>2.3.20</freemarker.version>
-        <jstl.version>1.2</jstl.version>
         <servlet.version>3.1.0</servlet.version>
-        <javax.el-api.version>3.0.1-b02</javax.el-api.version>
         <jetbrick.version>2.0.10</jetbrick.version>
     </properties>
 
@@ -86,16 +84,6 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${jstl.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>${javax.el-api.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.subchen</groupId>
