@@ -1,16 +1,19 @@
 package com.github.tonydeng.kraay.service;
 
-import com.github.tonydeng.kraay.bean.TemplateConfig;
 import com.cim120.commons.utils.CompressUtil;
 import com.cim120.commons.utils.FileUtil;
+import com.github.tonydeng.kraay.Constant;
 import com.github.tonydeng.kraay.bean.ColumnInfo;
 import com.github.tonydeng.kraay.bean.Field;
+import com.github.tonydeng.kraay.bean.TemplateConfig;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.annotation.Resource;
@@ -18,25 +21,24 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by tonydeng on 14-8-27.
  */
+@Service("builderService")
 public class BuilderService {
     private static final Logger log = LoggerFactory.getLogger(BuilderService.class);
-    private static final String encoding = "UTF-8";
-    private static final String table_prefix = "t_";
-    private static final String well = "#";
-
-    private String savePath;
+    @Resource
+    private Properties kraayConfig;
 
     @Resource
     private Configuration freemarker;
 
-    public void builder(String packaging, String database, Map<String, List<ColumnInfo>> columns) {
+    public String builder(String packaging, String database, Map<String, List<ColumnInfo>> columns) {
 
-        FileUtil.delFolder(savePath);
+        FileUtil.delFolder(getSavePath());
 
         for (String table : columns.keySet()) {
             Map model = new ConcurrentHashMap();
@@ -61,18 +63,19 @@ public class BuilderService {
             model.put("columns", columns);
 
             model.put("fields", fields);
-            model.put("well", well);
+            model.put("well", Constant.WELL);
             writeFile(model);
         }
-
-        CompressUtil.zipFile(savePath, new File(getSavePath()).getParent() + File.separator + database + ".zip");
+        String zipFile = Joiner.on("/").join(new String[]{new File(getSavePath()).getParent(),database+".zip"});
+        CompressUtil.zipFile(getSavePath(),  zipFile);
+        return zipFile;
     }
 
     private void writeFile(Map model) {
         try {
 
-            for(TemplateConfig config: getTemplates(model)){
-                Template template = freemarker.getTemplate(config.getTempateName(), encoding);
+            for (TemplateConfig config : getTemplates(model)) {
+                Template template = freemarker.getTemplate(config.getTempateName(), Constant.UTF_8);
                 String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
                 FileUtil.saveFile(content.getBytes(), config.getTargetFile());
             }
@@ -86,11 +89,11 @@ public class BuilderService {
 
     private List<TemplateConfig> getTemplates(Map model) {
         return Lists.newArrayList(
-                new TemplateConfig("dao.ftl", savePath + File.separator + "dao" + File.separator + model.get("className") + "Dao.java"),
-                new TemplateConfig("entity.ftl", savePath + File.separator + "entity" + File.separator + model.get("className") + ".java"),
-                new TemplateConfig("sqlmap.ftl", savePath + File.separator + "sqlmap" + File.separator + model.get("className") + "Mapper.xml"),
-                new TemplateConfig("service.ftl", savePath + File.separator + "service" + File.separator + model.get("className") + "Service.java"),
-                new TemplateConfig("controller.ftl", savePath + File.separator + "controller" + File.separator + model.get("className") + "Controller.java")
+                new TemplateConfig("dao.ftl", getSavePath() + File.separator + "dao" + File.separator + model.get("className") + "Dao.java"),
+                new TemplateConfig("entity.ftl", getSavePath() + File.separator + "entity" + File.separator + model.get("className") + ".java"),
+                new TemplateConfig("sqlmap.ftl", getSavePath() + File.separator + "sqlmap" + File.separator + model.get("className") + "Mapper.xml"),
+                new TemplateConfig("service.ftl", getSavePath() + File.separator + "service" + File.separator + model.get("className") + "Service.java"),
+                new TemplateConfig("controller.ftl", getSavePath() + File.separator + "controller" + File.separator + model.get("className") + "Controller.java")
         );
     }
 
@@ -127,7 +130,7 @@ public class BuilderService {
         return fieldType;
     }
 
-    private String getLower(String name) {
+    public String getLower(String name) {
         StringBuffer lower = new StringBuffer();
         String[] array = name.split("_");
         for (int i = 0; i < array.length; i++) {
@@ -149,10 +152,10 @@ public class BuilderService {
         return upper.toString();
     }
 
-    private String getClassName(String table) {
+    public String getClassName(String table) {
         String className;
-        if (table.indexOf(table_prefix) == 0) {
-            className = table.substring(table_prefix.length(), table.length());
+        if (table.indexOf(Constant.TABLE_PREFIX) == 0) {
+            className = table.substring(Constant.TABLE_PREFIX.length(), table.length());
         } else {
             className = table;
         }
@@ -163,11 +166,8 @@ public class BuilderService {
         return sb.toString();
     }
 
-    public  String getSavePath() {
-        return savePath;
+    public String getSavePath() {
+        return Constant.TMP_PATH + kraayConfig.getProperty("save.path");
     }
 
-    public  void setSavePath(String savePath) {
-        this.savePath = savePath;
-    }
 }

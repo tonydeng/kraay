@@ -40,8 +40,6 @@
         <property name="defaultEncoding" value="UTF-8" />
     </bean>
 
-    <bean id="builderService" class="com.github.tonydeng.kraay.service.BuilderService">
-        <property name="savePath" value="${savePath}"/>
-    </bean>
+
     <import resource="mvc.xml"/>
 </beans>

@@ -1,6 +1,7 @@
 package com.github.tonydeng.kraay.service;
 
 import com.github.tonydeng.kraay.BaseTest;
+import com.github.tonydeng.kraay.Constant;
 import com.github.tonydeng.kraay.bean.ColumnInfo;
 import com.github.tonydeng.kraay.bean.MysqlInfo;
 import com.github.tonydeng.kraay.utils.DBUtil;
@@ -17,7 +18,7 @@ import java.util.Map;
 /**
  * Created by tonydeng on 14-8-26.
  */
-//@Ignore
+@Ignore
 public class DatabaseServiceTest extends BaseTest {
     @Resource
     private DatabaseService databaseService;
@@ -32,7 +33,7 @@ public class DatabaseServiceTest extends BaseTest {
     }
     @Test
     public void showDatabaseTest() throws SQLException, ClassNotFoundException {
-        List<String> list = databaseService.getDatabaseOrTables(mi, DBUtil.Info.DB);
+        List<String> list = databaseService.getDatabaseOrTables(mi, Constant.MySQLSelect.DB);
         for(String db:list){
             log.info(db);
         }
@@ -41,7 +42,7 @@ public class DatabaseServiceTest extends BaseTest {
     @Test
     public void showTablesTest() throws SQLException, ClassNotFoundException {
         mi.setDatabase("data_test");
-        List<String> list = databaseService.getDatabaseOrTables(mi, DBUtil.Info.Table);
+        List<String> list = databaseService.getDatabaseOrTables(mi, Constant.MySQLSelect.Table);
         for(String table:list){
             log.info(table);
         }
