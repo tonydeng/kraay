@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cim120.commons</groupId>
+    <groupId>com.github.tonydeng</groupId>
     <artifactId>kraay</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -10,8 +10,8 @@
     <name>kraay</name>
     <url>http://maven.apache.org</url>
     <scm>
-        <connection>scm:git:git@git.cimyun.com:commons/kraay.git</connection>
-        <developerConnection>scm:git:git@git.cimyun.com:commons/kraay.git</developerConnection>
+        <connection>scm:git:git@github.com:tonydeng/kraay.git</connection>
+        <developerConnection>scm:git:git@github.com:tonydeng/kraay.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <properties>
